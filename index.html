@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="calculator.js"></script>
     <link rel="stylesheet" href="styles.css" />
     <title>Odin Calculator</title>
     <style>
@@ -13,30 +12,31 @@
   <body>
     <div id="container">
       <h1 id="cal-head">R<span style="color: #d90429">i</span>p</h1>
-      <div id="cal-display">123456</div>
+      <div id="cal-display"></div>
       <div id="btns">
-        <button class="rounded-btns tp-btns">,</button>
-        <button class="rounded-btns tp-btns">(</button>
-        <button class="rounded-btns tp-btns">)</button>
-        <button class="rounded-btns oper">/</button>
-        <button class="rounded-btns">7</button>
-        <button class="rounded-btns">8</button>
-        <button class="rounded-btns">9</button>
-        <button class="rounded-btns oper">X</button>
-        <button class="rounded-btns">4</button>
-        <button class="rounded-btns">5</button>
-        <button class="rounded-btns">6</button>
-        <button class="rounded-btns oper">-</button>
-        <button class="rounded-btns">1</button>
-        <button class="rounded-btns">2</button>
-        <button class="rounded-btns">3</button>
-        <button class="rounded-btns oper">+</button>
-        <button class="rounded-btns">0</button>
-        <button class="rounded-btns">.</button>
-        <button class="rounded-btns">( - )</button>
-        <button class="rounded-btns oper">=</button>
+        <button id="clear" class="rounded-btns tp-btns">C</button>
+        <button id="paren-open" class="rounded-btns tp-btns">(</button>
+        <button id="paren-close" class="rounded-btns tp-btns">)</button>
+        <button id="divide" class="rounded-btns oper">÷</button>
+        <button id="seven" class="rounded-btns">7</button>
+        <button id="eight" class="rounded-btns">8</button>
+        <button id="nine" class="rounded-btns">9</button>
+        <button id="multi" class="rounded-btns oper">X</button>
+        <button id="four" class="rounded-btns">4</button>
+        <button id="five" class="rounded-btns">5</button>
+        <button id="six" class="rounded-btns">6</button>
+        <button id="sub" class="rounded-btns oper">-</button>
+        <button id="one" class="rounded-btns">1</button>
+        <button id="two" class="rounded-btns">2</button>
+        <button id="three" class="rounded-btns">3</button>
+        <button id="add" class="rounded-btns oper">+</button>
+        <button id="zero" class="rounded-btns">0</button>
+        <button id="point" class="rounded-btns">.</button>
+        <button id="neg" class="rounded-btns">( - )</button>
+        <button id="equal" class="rounded-btns oper">=</button>
       </div>
       <h2 id="trademark">Pollen.</h2>
     </div>
+    <script src="calculator.js"></script>
   </body>
 </html>
