@@ -1,3 +1,9 @@
+let currentInput = '';
+let currentOperation = '';
+let previousInput = '';
+
+
+
 function add(a, b) {
     return a + b;
 }
@@ -14,136 +20,91 @@ function divide(a, b) {
     return a / b;
 }
 
-let num1 = [];
-let num2 = [];
-let operator = '';
+function operate() {
+    if (previousInput === '' || currentInput === '') return;
+    let result;
+    let prev = parseFloat(previousInput);
+    let current = parseFloat(currentInput);
 
-function operate(num1, oper, num2) {
-    switch (oper) {
+    switch (currentOperation) {
         case '+':
-            return add(num1, num2);
+            result = add(prev, current);
+            break;
         case '-':
-            return subtract(num1, num2);
+            result = subtract(prev, current);
+            break;
         case '*':
-            return multiply(num1, num2);
+            result = multiply(prev, current);
+            break;
         case '/':
-            return divide(num1, num2);
+            if (current === 0) {
+                alert("Cannot divide by zero");
+                return;
+            }
+            result = divide(prev, current);
+            break;
+        // case '_':
+        //     result = multiply(current, -1);
+        //     break
+        default:
+            return;
     }
+    currentInput = result.toString();
+    currentOperation = '';
+    previousInput = '';
+    document.getElementById('cal-display').value = currentInput;
+}
+
+function operateNeg() {
+    document.getElementById('cal-display').value = -currentInput;
+}
+
+function appendNumber(num) {
+    currentInput += num;
+    document.getElementById("cal-display").value = `${currentInput}`;
 }
 
 
-const display = document.querySelector("#cal-display");
-let displayText = display.textContent;
-let textArr = [];
-
-function updateDisplayText() {
-    displayText = textArr.join("");
-    display.textContent = displayText;
-}
-
-function updateArr(num) {
-    if (textArr.length < 29) {
-        switch (num) {
-            case '-':
-                if (!textArr.includes('-')) {
-                    textArr.unshift('-');
-                }
-                break;
-            case '.':
-                if (!textArr.includes('.')) {
-                    textArr.push('.');
-                }
-                break;
-            default:
-                textArr.push(num);
-                break;
-        }
-   }
+function appenedOperation(operation) {
+    if (currentInput === '') {return}
+    if (operation === '_') {
+        currentInput *= -1;
+    };
+    if (previousInput !== '') {
+        operate(); 
+    }
+    currentOperation = operation;
+    previousInput = currentInput;
+    currentInput = '';
+    document.getElementById('cal-display').value = `${previousInput}`;
 }
 
 function clear() {
-    textArr.splice(0,);
+    currentInput = '';
+    previousInput = '';
+    currentOperation = '';
+    document.getElementById('cal-display').value = '';
 }
 
-
-
-function getDigits(oper) {
-    num2 = display.textContent;
-    num1 = operate(num1, oper, num2);
-    // updateDisplay("c");
-    updateDisplay(num1);
-}
-
-
-document.getElementById("zero").onclick = () => {
-    updateArr('0');
-    updateDisplayText();
-};
-document.getElementById("one").onclick = () => {
-    updateArr('1');
-    updateDisplayText();
-};
-document.getElementById("two").onclick = () => {
-    updateArr('2');
-    updateDisplayText();
-};
-document.getElementById("three").onclick = () => {
-    updateArr('3');
-    updateDisplayText();
-};
-document.getElementById("four").onclick = () => {
-    updateArr('4');
-    updateDisplayText();
-};
-document.getElementById("five").onclick = () => {
-    updateArr('5');
-    updateDisplayText();
-};
-document.getElementById("six").onclick = () => {
-    updateArr('6');
-    updateDisplayText();
-};
-document.getElementById("seven").onclick = () => {
-    updateArr('7');
-    updateDisplayText();
-};
-document.getElementById("eight").onclick = () => {
-    updateArr('8');
-    updateDisplayText();
-};
-document.getElementById("nine").onclick = () => {
-    updateArr('9');
-    updateDisplayText();
-};
-document.getElementById("paren-open").onclick = () => {
-    updateArr('(');
-    updateDisplayText();
-};
-document.getElementById("paren-close").onclick = () => {
-    updateArr(')');
-    updateDisplayText();
-};
-document.getElementById("clear").onclick = () => {
-    clear();
-    updateDisplayText();
-};
-document.getElementById("add").onclick = () => {
-    operator = '+';
-
-    num2 = textArr.join("");
-    console.log(num2);
-    clear();
-    updateDisplayText();
-    num1 = operate(num1, operator, num2);
-    
-    updateArr(num1);
-    
+document.getElementById("zero").onclick = () => appendNumber('0');
+document.getElementById("one").onclick = () => appendNumber('1');
+document.getElementById("two").onclick = () => appendNumber('2');
+document.getElementById("three").onclick = () => appendNumber('3');
+document.getElementById("four").onclick = () => appendNumber('4');
+document.getElementById("five").onclick = () => appendNumber('5');
+document.getElementById("six").onclick = () => appendNumber('6');
+document.getElementById("seven").onclick = () => appendNumber('7');
+document.getElementById("eight").onclick = () => appendNumber('8');
+document.getElementById("nine").onclick = () => appendNumber('9');
+document.getElementById("clear").onclick = () => clear();
+document.getElementById("add").onclick = () => appenedOperation('+');
+document.getElementById("sub").onclick = () => appenedOperation('-');
+document.getElementById("divide").onclick = () => appenedOperation('/');
+document.getElementById("multi").onclick = () => appenedOperation('*');
+document.getElementById("equal").onclick = () => operate();
+document.getElementById("point").onclick = () => {
+    if (!currentInput.includes('.')) { appendNumber('.'); };
 };
 document.getElementById("neg").onclick = () => {
-    updateArr('-');
-    updateDisplayText();
-};
-document.getElementById("point").onclick = () => {
-    updateArr('.');
-    updateDisplayText();
+    if (!currentInput.includes('-')) { appenedOperation('_'); };
 };
