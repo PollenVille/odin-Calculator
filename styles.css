@@ -60,6 +60,15 @@ body{
     margin-top: 25px;
 }
 
+.rounded-btns:hover {
+    background-color: #D90429;
+    transform: scale(1.1);
+}
+
+.rounded-btns:active {
+    background-color: #931621;
+}
+
 .rounded-btns{
     width: 80px;
     height: 80px;
