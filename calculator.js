@@ -1,9 +1,12 @@
 let currentInput = '';
 let currentOperation = '';
 let previousInput = '';
+let isResultDisplayed = false;
 
-
-
+/************************************************************************ 
+        Calculator functions for Add, substract, multiply, and divide
+    Method to switch between equation functions based on operations type
+*************************************************************************/
 function add(a, b) {
     return a + b;
 }
@@ -28,7 +31,10 @@ function operate() {
 
     switch (currentOperation) {
         case '+':
+            console.log(`This is previous input ${previousInput}`);
+            console.log(`This is current input ${currentInput}`);
             result = add(prev, current);
+            console.log(`This is the result ${result}`);
             break;
         case '-':
             result = subtract(prev, current);
@@ -43,9 +49,6 @@ function operate() {
             }
             result = divide(prev, current);
             break;
-        // case '_':
-        //     result = multiply(current, -1);
-        //     break
         default:
             return;
     }
@@ -53,23 +56,45 @@ function operate() {
     currentOperation = '';
     previousInput = '';
     document.getElementById('cal-display').value = currentInput;
+
+    isResultDisplayed = true; // Set the flag to indicate a result was just displayed
 }
 
-function operateNeg() {
-    document.getElementById('cal-display').value = -currentInput;
-}
 
 function appendNumber(num) {
+/*********************************************************** 
+    Mehthod used to update currentInput with given number.
+    Update calculator display with new input
+************************************************************/
+    if (isResultDisplayed) {
+        // Clear the result if a number is entered after a calculation
+        currentInput = '';
+        isResultDisplayed = false; // Reset the flag
+    }
     currentInput += num;
     document.getElementById("cal-display").value = `${currentInput}`;
 }
 
 
+
 function appenedOperation(operation) {
-    if (currentInput === '') {return}
+/************************************************ 
+    Mehthod used to call continous operations.
+*************************************************/
+    if (currentInput === '') { return }
+
+    if (isResultDisplayed) {
+        // Do not clear the result if an operator is entered after a calculation
+        isResultDisplayed = false; // Reset the flag
+    }
+
     if (operation === '_') {
         currentInput *= -1;
-    };
+        console.log(currentInput);
+        previousInput = currentInput;
+        document.getElementById('cal-display').value = `${previousInput}`;
+        return
+    }
     if (previousInput !== '') {
         operate(); 
     }
@@ -79,12 +104,17 @@ function appenedOperation(operation) {
     document.getElementById('cal-display').value = `${previousInput}`;
 }
 
+
 function clear() {
+/********************************** 
+    Clears all inputs and displays
+***********************************/
     currentInput = '';
     previousInput = '';
     currentOperation = '';
     document.getElementById('cal-display').value = '';
 }
+
 
 document.getElementById("zero").onclick = () => appendNumber('0');
 document.getElementById("one").onclick = () => appendNumber('1');
